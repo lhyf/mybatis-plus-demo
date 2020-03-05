@@ -66,6 +66,8 @@ public class MybatisPlusMethodTest {
         User user = new User();
         user.setAge(21);
         user.setPassword("654321");
+
+        // 根据 wrapper 封装的条件去更新,更新后的值为 user 封装的内容
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("user_name","zhangsan");
         int i = userMapper.update(user, wrapper);
