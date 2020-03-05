@@ -6,3 +6,8 @@ spring:
     url: jdbc:mysql://127.0.0.1/mybatis-plus-demo?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false
     username: root
     password: 123456
+
+logging:
+  level:
+    org:
+      lhyf: debug

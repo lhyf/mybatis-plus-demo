@@ -11,7 +11,6 @@ import java.util.List;
  * @desc UserMapper
  *
  **/
-//@Mapper
 public interface UserMapper extends BaseMapper<User> {
 
 }
