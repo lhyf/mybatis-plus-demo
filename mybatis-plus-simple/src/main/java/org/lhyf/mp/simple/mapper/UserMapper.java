@@ -1,7 +1,6 @@
 package org.lhyf.mp.simple.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
 import org.lhyf.mp.simple.entity.User;
 
 import java.util.List;

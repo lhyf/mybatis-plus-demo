@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.MybatisSqlSessionFactoryBuilder;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 import org.lhyf.mp.simple.entity.User;
 import org.lhyf.mp.simple.mapper.UserMapper;

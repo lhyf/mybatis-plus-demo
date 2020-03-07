@@ -30,7 +30,5 @@ public class MybatisPlusSpringTest {
     public void testSelectList(){
         List<User> users = userMapper.selectList(null);
         users.forEach(System.out::println);
-
     }
-
 }

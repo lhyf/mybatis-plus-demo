@@ -13,4 +13,6 @@ import java.util.List;
  **/
 public interface UserMapper extends BaseMapper<User> {
 
+    User getUserByUserName(String userName);
+
 }
