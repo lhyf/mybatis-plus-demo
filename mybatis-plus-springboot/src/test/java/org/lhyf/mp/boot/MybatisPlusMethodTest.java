@@ -93,7 +93,6 @@ public class MybatisPlusMethodTest {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.gt("age", 20); // 查询条件大于 20 岁的
 
-        // 查询结果超过一条时,会抛出异常
         Integer count = userMapper.selectCount(wrapper);
         System.out.println("一共查询到:" + count + " 条数据");
     }

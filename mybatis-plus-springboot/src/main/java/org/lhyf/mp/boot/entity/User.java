@@ -1,9 +1,7 @@
 package org.lhyf.mp.boot.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 
 @TableName(value = "t_user")
-public class User {
+public class User extends Model<User> {
 
     // 设置ID 自增长
     @TableId(type = IdType.AUTO)
@@ -31,12 +29,17 @@ public class User {
     private String name;
     private Integer age;
 
+    // 乐观锁版本
+    @Version
+    private Integer version;
+
     @TableField(value = "email") // 指定数据表中字段名
     private String mail;
 
 
     @TableField(exist = false)  // 使用此注解表明字段在数据表中不存在
     private String address; // 此字段在数据表中不存在
+
 
 
     public User(String userName, String password, String name, Integer age, String mail) {
