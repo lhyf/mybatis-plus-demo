@@ -264,12 +264,12 @@ public class MybatisPlusMethodTest {
         System.out.println(user);
     }
 
-    /***********************************自定义操作*************************************************/
+    /***********************************AllEq 操作*************************************************/
 
     /**
      * SELECT id,user_name,name,age,email AS mail
-     *  FROM t_user
-     *  WHERE password = '123' AND name = '小青' AND age IS NULL;
+     * FROM t_user
+     * WHERE password = '123' AND name = '小青' AND age IS NULL;
      */
     @Test
     public void testAllEq() {
@@ -287,8 +287,8 @@ public class MybatisPlusMethodTest {
 
     /**
      * SELECT id,user_name,name,age,email AS mail
-     *  FROM t_user
-     *  WHERE password = '123' AND name = '小青';
+     * FROM t_user
+     * WHERE password = '123' AND name = '小青';
      */
     @Test
     public void testAllEq2() {
@@ -299,21 +299,116 @@ public class MybatisPlusMethodTest {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
 
         // null2IsNull: false,则查询参数里为null的,不会出现在WHERE条件中
-        wrapper.allEq(params,false);
+        wrapper.allEq(params, false);
 
         List<User> users = userMapper.selectList(wrapper);
         users.forEach(System.out::println);
     }
 
+    /**
+     * SELECT id,user_name,name,age,email AS mail
+     * FROM t_user
+     * WHERE age = 20;
+     */
     @Test
     public void testAllEq3() {
         Map<String, Object> params = new HashMap<>();
         params.put("name", "小青");
-        params.put("age", null);
+        params.put("age", 20);
         params.put("password", "123");
         QueryWrapper<User> wrapper = new QueryWrapper<>();
 
-        wrapper.allEq(params,false);
+        // params 中的参数能否作为查询条件,取决于参数与Lambda表达式中的逻辑处理的结果,
+        // 如果true, 则此条件将出现在WHERE语句中
+        wrapper.allEq((k, v) -> {
+            return k.equals("age") || k.equals("id");
+        }, params);
+
+        List<User> users = userMapper.selectList(wrapper);
+        users.forEach(System.out::println);
+    }
+
+    /***********************************比较操作*************************************************/
+    /**
+     * SELECT id,user_name,name,age,email AS mail
+     *  FROM t_user
+     *  WHERE password = '123456' AND age > 19 AND name IN ('小青','小红');
+     */
+    @Test
+    public void testEq() {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("password", "123456")
+                .gt("age", 19)
+                .in("name", "小青","小红");
+
+        List<User> users = userMapper.selectList(wrapper);
+        users.forEach(System.out::println);
+    }
+
+    /***********************************Like操作*************************************************/
+    /**
+     * SELECT id,user_name,name,age,email AS mail
+     *  FROM t_user
+     *  WHERE user_name LIKE 'xiao%' AND email LIKE '%163.com';
+     */
+    @Test
+    public void testLike() {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.likeRight("user_name", "xiao")
+                .likeLeft("email","163.com");
+
+        List<User> users = userMapper.selectList(wrapper);
+        users.forEach(System.out::println);
+    }
+
+    /***********************************排序操作*************************************************/
+    /**
+     * SELECT id,user_name,name,age,email AS mail
+     *  FROM t_user
+     *  WHERE id < 5 ORDER BY age DESC;
+     */
+    @Test
+    public void testOrder() {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.lt("id",5)
+                .orderByDesc("age");
+
+        List<User> users = userMapper.selectList(wrapper);
+        users.forEach(System.out::println);
+    }
+
+    /***********************************OR操作*************************************************/
+    /**
+     * SELECT id,user_name,name,age,email AS mail
+     *  FROM t_user
+     *  WHERE name = '小青' OR age = 20 AND password = '123';
+     */
+    @Test
+    public void testOr() {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("name","小青")
+                .or()
+                .eq("age",20)
+                .eq("password","123");
+
+        List<User> users = userMapper.selectList(wrapper);
+        users.forEach(System.out::println);
+    }
+
+    /***********************************Select 指定查询字段 *************************************************/
+    /**
+     * SELECT id,name,age,password
+     *  FROM t_user
+     *  WHERE name = '小青' OR age = 20;
+     */
+    @Test
+    public void testSelect() {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("name","小青")
+                .or()
+                .eq("age",20)
+                // 指定查询的字段
+                .select("id","name","age","password");
 
         List<User> users = userMapper.selectList(wrapper);
         users.forEach(System.out::println);
