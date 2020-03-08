@@ -27,8 +27,12 @@ mybatis-plus:
     db-config:
       # 全局的ID生成策略, 设置后, 可以省略实体对象中的 @TableId(type = IdType.AUTO)配置
       id-type: auto
+      # 未删除状态的值为:1
+      logic-delete-value: 1
+      # 删除状态的值为:0
+      logic-not-delete-value: 0
       # 全局的表名的前缀,配置后可以省略@TableName()配置
-#      table-prefix: t_
+  #      table-prefix: t_
 
   # 开启驼峰命名(Mybatis-plus 默认开启)
   configuration:
@@ -36,3 +40,5 @@ mybatis-plus:
     # 禁用缓存(默认true)
     cache-enabled: true
 
+  # 配置枚举类型扫描的包
+  type-enums-package: org.lhyf.mp.boot.emun

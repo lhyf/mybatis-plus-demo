@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.lhyf.mp.boot.emun.SexEnum;
 
 /****
  * @author YF
@@ -24,14 +25,24 @@ public class User extends Model<User> {
     private Integer id;
     private String userName;
 
-    @TableField(select = false) // 查询时不返回该字段的值
+    // 查询时不返回该字段的值
+    // 插入数据时,自动填充
+    @TableField(select = false,fill = FieldFill.INSERT)
     private String password;
     private String name;
+
+    // 性别,枚举类型
+    private SexEnum sex;
+
     private Integer age;
 
     // 乐观锁版本
     @Version
     private Integer version;
+
+    // 逻辑删除字段 1:删除 0:未删除
+    @TableLogic
+    private Integer deleted;
 
     @TableField(value = "email") // 指定数据表中字段名
     private String mail;

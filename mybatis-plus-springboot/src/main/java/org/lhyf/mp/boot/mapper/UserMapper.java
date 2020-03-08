@@ -2,6 +2,7 @@ package org.lhyf.mp.boot.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.lhyf.mp.boot.entity.User;
+import org.lhyf.mp.boot.injectors.CommonMapper;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * @desc UserMapper
  *
  **/
-public interface UserMapper extends BaseMapper<User> {
+public interface UserMapper extends CommonMapper<User> {
 
     User getUserByUserName(String userName);
 

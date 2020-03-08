@@ -40,11 +40,11 @@ public class ActiveRecordTest {
     @Test
     public void testInsert() {
         User user = new User();
-        user.setUserName("xiaohong");
-        user.setPassword("123123");
+        user.setUserName("xiaobai");
+//        user.setPassword("123123");
         user.setAge(20);
-        user.setMail("xiaohong@outlook.com");
-        user.setName("小红");
+        user.setMail("xiaobai@outlook.com");
+        user.setName("小白");
 
         boolean insert = user.insert();
         System.out.println("插入成功? " + insert);

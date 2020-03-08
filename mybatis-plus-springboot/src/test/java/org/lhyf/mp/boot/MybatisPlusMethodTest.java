@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.lhyf.mp.boot.emun.SexEnum;
 import org.lhyf.mp.boot.entity.User;
 import org.lhyf.mp.boot.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,9 @@ public class MybatisPlusMethodTest {
      */
     @Test
     public void testInsert() {
-        User user = new User("xiaohong", "123", "小红",
-                null, "xiaohong@163.com");
+        User user = new User("xiaozao", "123", "小皂",
+                null, "xiaozao@163.com");
+        user.setSex(SexEnum.WOMAN);
         int i = userMapper.insert(user);
         System.out.println("数据库受影响的行数:" + i);
         System.out.println("自增长的ID:" + user.getId());
@@ -219,7 +221,7 @@ public class MybatisPlusMethodTest {
     @Test
     public void testDelete() {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("id", 12);
+        wrapper.eq("id", 1);
 
         int i = userMapper.delete(wrapper);
 
@@ -330,15 +332,15 @@ public class MybatisPlusMethodTest {
     /***********************************比较操作*************************************************/
     /**
      * SELECT id,user_name,name,age,email AS mail
-     *  FROM t_user
-     *  WHERE password = '123456' AND age > 19 AND name IN ('小青','小红');
+     * FROM t_user
+     * WHERE password = '123456' AND age > 19 AND name IN ('小青','小红');
      */
     @Test
     public void testEq() {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("password", "123456")
                 .gt("age", 19)
-                .in("name", "小青","小红");
+                .in("name", "小青", "小红");
 
         List<User> users = userMapper.selectList(wrapper);
         users.forEach(System.out::println);
@@ -347,14 +349,14 @@ public class MybatisPlusMethodTest {
     /***********************************Like操作*************************************************/
     /**
      * SELECT id,user_name,name,age,email AS mail
-     *  FROM t_user
-     *  WHERE user_name LIKE 'xiao%' AND email LIKE '%163.com';
+     * FROM t_user
+     * WHERE user_name LIKE 'xiao%' AND email LIKE '%163.com';
      */
     @Test
     public void testLike() {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.likeRight("user_name", "xiao")
-                .likeLeft("email","163.com");
+                .likeLeft("email", "163.com");
 
         List<User> users = userMapper.selectList(wrapper);
         users.forEach(System.out::println);
@@ -363,13 +365,13 @@ public class MybatisPlusMethodTest {
     /***********************************排序操作*************************************************/
     /**
      * SELECT id,user_name,name,age,email AS mail
-     *  FROM t_user
-     *  WHERE id < 5 ORDER BY age DESC;
+     * FROM t_user
+     * WHERE id < 5 ORDER BY age DESC;
      */
     @Test
     public void testOrder() {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.lt("id",5)
+        wrapper.lt("id", 5)
                 .orderByDesc("age");
 
         List<User> users = userMapper.selectList(wrapper);
@@ -379,16 +381,16 @@ public class MybatisPlusMethodTest {
     /***********************************OR操作*************************************************/
     /**
      * SELECT id,user_name,name,age,email AS mail
-     *  FROM t_user
-     *  WHERE name = '小青' OR age = 20 AND password = '123';
+     * FROM t_user
+     * WHERE name = '小青' OR age = 20 AND password = '123';
      */
     @Test
     public void testOr() {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("name","小青")
+        wrapper.eq("name", "小青")
                 .or()
-                .eq("age",20)
-                .eq("password","123");
+                .eq("age", 20)
+                .eq("password", "123");
 
         List<User> users = userMapper.selectList(wrapper);
         users.forEach(System.out::println);
@@ -397,17 +399,17 @@ public class MybatisPlusMethodTest {
     /***********************************Select 指定查询字段 *************************************************/
     /**
      * SELECT id,name,age,password
-     *  FROM t_user
-     *  WHERE name = '小青' OR age = 20;
+     * FROM t_user
+     * WHERE name = '小青' OR age = 20;
      */
     @Test
     public void testSelect() {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("name","小青")
+        wrapper.eq("name", "小青")
                 .or()
-                .eq("age",20)
+                .eq("age", 20)
                 // 指定查询的字段
-                .select("id","name","age","password");
+                .select("id", "name", "age", "password");
 
         List<User> users = userMapper.selectList(wrapper);
         users.forEach(System.out::println);
